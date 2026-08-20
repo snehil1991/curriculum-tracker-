@@ -57,12 +57,12 @@ export default function SeniorDashboard() {
         return () => clearInterval(intv);
     }, []);
 
-    const handleStatusUpdate = async (id: string, status: 'ACHIEVED' | 'INTERVENTION') => {
+    const handleStatusUpdate = async (id: string, status: 'ACHIEVED' | 'INTERVENTION', videoUrl: string) => {
         try {
             const res = await fetch(`/api/submissions/${id}/status`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status })
+                body: JSON.stringify({ status, videoUrl })
             });
             if (res.ok) {
                 setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status } : s));
@@ -173,7 +173,7 @@ export default function SeniorDashboard() {
                                     <div className="mt-auto pt-6 border-t border-neutral-700/50">
                                         <div className="grid grid-cols-2 gap-3">
                                             <button
-                                                onClick={() => handleStatusUpdate(sub.id, 'ACHIEVED')}
+                                                onClick={() => handleStatusUpdate(sub.id, 'ACHIEVED', sub.videoUrl)}
                                                 className={`py-3 px-2 rounded-xl transition-all font-bold tracking-wide flex items-center justify-center gap-2 ${sub.status === 'ACHIEVED'
                                                     ? 'bg-emerald-600 text-white shadow-[0_0_20px_rgba(5,150,105,0.4)] ring-2 ring-emerald-500 ring-offset-2 ring-offset-neutral-800'
                                                     : 'bg-neutral-900/50 text-neutral-400 hover:bg-emerald-900/40 hover:text-emerald-400 border border-neutral-700 hover:border-emerald-700'
@@ -185,7 +185,7 @@ export default function SeniorDashboard() {
                                                 Achieved
                                             </button>
                                             <button
-                                                onClick={() => handleStatusUpdate(sub.id, 'INTERVENTION')}
+                                                onClick={() => handleStatusUpdate(sub.id, 'INTERVENTION', sub.videoUrl)}
                                                 className={`py-3 px-2 rounded-xl transition-all font-bold tracking-wide flex items-center justify-center gap-2 ${sub.status === 'INTERVENTION'
                                                     ? 'bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)] ring-2 ring-red-500 ring-offset-2 ring-offset-neutral-800'
                                                     : 'bg-neutral-900/50 text-neutral-400 hover:bg-red-900/40 hover:text-red-400 border border-neutral-700 hover:border-red-700'
