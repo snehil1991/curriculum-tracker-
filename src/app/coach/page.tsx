@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
@@ -35,6 +35,19 @@ function CoachPortalContent() {
     const [center, setCenter] = useState('');
     const [trainingWeek, setTrainingWeek] = useState('');
     const [submissionType, setSubmissionType] = useState('');
+
+    const [coachesList, setCoachesList] = useState<string[]>([]);
+    const [loadingCoaches, setLoadingCoaches] = useState(true);
+
+    useEffect(() => {
+        fetch('/api/coaches')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) setCoachesList(data);
+                setLoadingCoaches(false);
+            })
+            .catch(() => setLoadingCoaches(false));
+    }, []);
 
     const availableCenters = selectedState && STATE_CENTER_MAP[selectedState] ? STATE_CENTER_MAP[selectedState] : [];
 
@@ -183,7 +196,16 @@ function CoachPortalContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div className="space-y-2 md:col-span-2">
                             <label className="text-sm font-medium text-neutral-300">Coach's Name</label>
-                            <input type="text" value={coachName} onChange={(e) => setCoachName(e.target.value)} placeholder="Enter full name" required className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
+                            {loadingCoaches ? (
+                                <div className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-500 animate-pulse">Loading verified coaches...</div>
+                            ) : coachesList.length > 0 ? (
+                                <select value={coachName} onChange={(e) => setCoachName(e.target.value)} required className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow appearance-none">
+                                    <option value="">Select Authorized Coach</option>
+                                    {coachesList.map(c => <option key={c} value={c}>{c}</option>)}
+                                </select>
+                            ) : (
+                                <input type="text" value={coachName} onChange={(e) => setCoachName(e.target.value)} placeholder="Enter full name" required className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
+                            )}
                         </div>
 
                         <div className="space-y-2">
@@ -277,9 +299,12 @@ function CoachPortalContent() {
                     </button>
                 </form>
 
-                <div className="mt-8 text-center">
+                <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                     <Link href="/" className="text-neutral-400 hover:text-white transition-colors underline-offset-4 hover:underline">
                         &larr; Back to Home
+                    </Link>
+                    <Link href="/coach/dashboard" className="text-blue-400 font-semibold hover:text-blue-300 transition-colors bg-blue-500/10 px-6 py-2 rounded-full border border-blue-500/20">
+                        View My Progress & Analytics &rarr;
                     </Link>
                 </div>
             </div>
