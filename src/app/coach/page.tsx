@@ -227,7 +227,7 @@ function CoachPortalContent() {
                     <div className="mb-8 space-y-2">
                         <label className="text-sm font-medium text-neutral-300">HD Video Upload</label>
                         <div className="relative border-2 border-dashed border-neutral-700 hover:border-neutral-500 transition-colors rounded-xl p-8 text-center bg-neutral-900 overflow-hidden">
-                            <input type="file" accept="video/*" capture="environment" onChange={(e) => setVideoFile(e.target.files?.[0] || null)} required className="absolute inset-x-0 inset-y-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                            <input type="file" accept="video/*" onChange={(e) => setVideoFile(e.target.files?.[0] || null)} required className="absolute inset-x-0 inset-y-0 w-full h-full opacity-0 cursor-pointer z-10" />
 
                             <div className="pointer-events-none relative z-0">
                                 {!videoFile ? (
