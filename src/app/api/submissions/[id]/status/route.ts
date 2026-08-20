@@ -7,7 +7,7 @@ export async function PATCH(
     try {
         const { id } = await params;
         const body = await request.json();
-        const { status, videoUrl } = body;
+        const { status, videoUrl, checker, feedback } = body;
 
         if (!status || !['ACHIEVED', 'INTERVENTION'].includes(status)) {
             return NextResponse.json({ error: 'Invalid or missing status' }, { status: 400 });
@@ -22,7 +22,9 @@ export async function PATCH(
                 body: JSON.stringify({
                     action: "UPDATE_STATUS",
                     videoUrl: videoUrl,
-                    newStatus: status
+                    newStatus: status,
+                    checker,
+                    feedback
                 })
             }).catch(e => console.error("Status Webhook Error:", e));
         }
