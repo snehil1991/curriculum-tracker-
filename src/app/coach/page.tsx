@@ -18,7 +18,7 @@ const STATE_CENTER_MAP: Record<string, string[]> = {
 
 const STATES = Object.keys(STATE_CENTER_MAP);
 const WEEKS = Array.from({ length: 26 }, (_, i) => `Week ${i + 1}`);
-const SUBMISSION_TYPES = ['Day 1 Intro', 'Day 5/6 Execution'];
+const SUBMISSION_TYPES = ['Day 1', 'Day 6'];
 
 function CoachPortalContent() {
     const router = useRouter();
@@ -186,11 +186,6 @@ function CoachPortalContent() {
                             <input type="text" value={coachName} onChange={(e) => setCoachName(e.target.value)} placeholder="Enter full name" required className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
                         </div>
 
-                        <div className="space-y-2 md:col-span-2">
-                            <label className="text-sm font-medium text-neutral-300">Batch (Optional)</label>
-                            <input type="text" value={batch} onChange={(e) => setBatch(e.target.value)} placeholder="Enter batch (e.g. B1, BX1, I1)" className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
-                        </div>
-
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-neutral-300">State</label>
                             <select value={selectedState} onChange={(e) => setSelectedState(e.target.value)} required className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow appearance-none">
@@ -205,6 +200,11 @@ function CoachPortalContent() {
                                 <option value="">Select Center</option>
                                 {availableCenters.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
+                        </div>
+
+                        <div className="space-y-2 md:col-span-2">
+                            <label className="text-sm font-medium text-neutral-300">Batch</label>
+                            <input type="text" value={batch} onChange={(e) => setBatch(e.target.value)} placeholder="Enter batch (e.g. B1, BX1, I1)" required className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
                         </div>
 
                         <div className="space-y-2">
