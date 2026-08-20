@@ -13,6 +13,7 @@ interface Submission {
     submissionType: string;
     videoUrl: string;
     status: 'PENDING' | 'ACHIEVED' | 'INTERVENTION';
+    feedbacks?: { checker: string, message: string }[];
     createdAt: number;
 }
 
@@ -264,6 +265,20 @@ export default function SeniorDashboard() {
                                             </button>
                                         </div>
                                     </div>
+
+                                    {sub.feedbacks && sub.feedbacks.length > 0 && (
+                                        <div className="mt-6 border-t border-neutral-700/50 pt-4">
+                                            <h4 className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-3">Feedback Log</h4>
+                                            <div className="space-y-2">
+                                                {sub.feedbacks.map((fb, idx) => (
+                                                    <div key={idx} className="bg-neutral-900 border border-neutral-700 rounded-xl p-3">
+                                                        <p className="text-blue-400 text-xs font-bold mb-1">{fb.checker}</p>
+                                                        <p className="text-neutral-300 text-xs leading-relaxed">{fb.message}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))}

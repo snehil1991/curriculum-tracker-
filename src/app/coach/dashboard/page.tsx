@@ -14,6 +14,7 @@ interface Submission {
     submissionType: string;
     videoUrl: string;
     status: string;
+    feedbacks?: { checker: string, message: string }[];
 }
 
 function CoachDashboardContent() {
@@ -138,6 +139,18 @@ function CoachDashboardContent() {
                                         Watch Submitted Video &rarr;
                                     </a>
                                 </div>
+
+                                {sub.feedbacks && sub.feedbacks.length > 0 && (
+                                    <div className="mt-4 pt-4 border-t border-neutral-700/50 space-y-3">
+                                        <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Intervention Feedback</h4>
+                                        {sub.feedbacks.map((fb, idx) => (
+                                            <div key={idx} className="bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                                                <p className="text-red-400 text-sm font-semibold mb-1">{fb.checker}</p>
+                                                <p className="text-neutral-300 text-xs leading-relaxed">{fb.message}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
