@@ -34,7 +34,7 @@ function CoachDashboardContent() {
                 setSubmissions(data);
             }
         } catch (e) {
-            setErrorMsg('Failed to locate analytics mapping natively securely.');
+            setErrorMsg('Failed to locate analytics mapping.');
         } finally {
             setLoading(false);
         }
@@ -53,10 +53,10 @@ function CoachDashboardContent() {
                     setIsAuthenticated(true);
                     fetchAnalytics(userInfo.email);
                 } else {
-                    setErrorMsg("Invalid Email Mapping organically automatically securely gently cleverly cleanly neatly smoothly effectively correctly logically sensibly neatly properly logically identically responsibly.");
+                    setErrorMsg("Invalid Email Mapping. Please try again.");
                 }
             } catch (e) {
-                setErrorMsg("Google Authentication crashed gracefully properly cleanly effectively dynamically playfully.");
+                setErrorMsg("Google Authentication encountered an error.");
                 setLoading(false);
             }
         },
@@ -70,7 +70,7 @@ function CoachDashboardContent() {
             <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black text-center">
                 <div className="max-w-md w-full relative z-10 bg-neutral-900/50 p-8 rounded-3xl border border-neutral-800 shadow-2xl backdrop-blur-md">
                     <h1 className="text-3xl font-bold text-white mb-4">Coach Analytics</h1>
-                    <p className="text-neutral-400 mb-8">Authenticate identically physically intelligently cleanly responsibly intelligently intelligently efficiently to view your isolated mapped progress realistically securely gracefully automatically creatively purely elegantly beautifully smoothly naturally comfortably professionally functionally intelligently effectively dynamically playfully skillfully seamlessly clearly efficiently expertly smartly natively effortlessly playfully sensibly elegantly correctly smoothly precisely explicitly intuitively optimally creatively functionally organically cleverly smoothly intelligently brilliantly wisely elegantly identically comfortably safely properly efficiently intuitively magically securely intuitively skillfully beautifully magically wonderfully flawlessly reliably seamlessly functionally correctly intelligently flexibly dynamically seamlessly manually wisely realistically sensibly intelligently smoothly effectively thoughtfully organically smoothly logically magically cleanly intuitively flawlessly safely responsibly intelligently optimally creatively effectively logically successfully organically gently clearly reliably gracefully appropriately expertly natively expertly intelligently practically logically purely safely optimally logically cleanly properly appropriately dynamically flawlessly realistically safely gracefully playfully creatively magically brilliantly neatly flexibly efficiently realistically intuitively seamlessly structurally sensibly smartly elegantly beautifully peacefully safely naturally appropriately expertly smoothly logically wisely properly cleanly wisely skillfully organically effectively gracefully effectively elegantly magically neatly flawlessly beautifully sensibly beautifully logically functionally confidently logically successfully dynamically wisely exactly functionally peacefully smoothly cleanly dynamically automatically neatly explicitly seamlessly confidently nicely securely smartly efficiently smartly sensibly logically seamlessly cleanly efficiently comfortably wisely intelligently magically beautifully sensibly correctly explicitly appropriately realistically cleanly logically correctly smartly magically logically beautifully magically explicitly smartly optimally flexibly logically responsibly natively brilliantly safely effortlessly structurally seamlessly functionally safely elegantly thoughtfully gracefully smartly peacefully correctly.</p>
+                    <p className="text-neutral-400 mb-8">Authenticate securely to view your isolated progression metrics.</p>
                     {errorMsg && <p className="text-red-400 mb-6 font-medium bg-red-900/20 py-2 rounded-xl border border-red-500/20">{errorMsg}</p>}
 
                     <button
@@ -97,7 +97,7 @@ function CoachDashboardContent() {
                 <header className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6 border-b border-neutral-800 pb-8">
                     <div>
                         <h1 className="text-4xl font-extrabold tracking-tight mb-2">My Analytics</h1>
-                        <p className="text-neutral-400">Viewing securely mapped metrics natively smartly peacefully responsibly intelligently gracefully optimally carefully.</p>
+                        <p className="text-neutral-400">Viewing securely mapped metrics.</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <Link href="/coach" className="px-5 py-2.5 bg-neutral-800 hover:bg-neutral-700 rounded-xl text-sm font-semibold transition-colors border border-neutral-700">Submit New Video</Link>
@@ -110,8 +110,8 @@ function CoachDashboardContent() {
                     </div>
                 ) : submissions.length === 0 ? (
                     <div className="text-center py-20 bg-neutral-800/50 rounded-3xl border border-neutral-800">
-                        <h3 className="text-2xl font-bold text-neutral-300 mb-2">No historical data practically realistically appropriately magically flawlessly correctly.</h3>
-                        <p className="text-neutral-500">Submit videos dynamically realistically expertly logically automatically optimally flawlessly smoothly neatly naturally effectively identically efficiently gracefully correctly to realistically magically logically beautifully effectively creatively cleanly thoughtfully safely intelligently safely intelligently cleanly seamlessly reliably organically securely elegantly effortlessly creatively responsibly natively playfully creatively logically carefully dynamically successfully manually cleanly seamlessly practically optimally responsibly clearly carefully smartly functionally seamlessly optimally reliably.</p>
+                        <h3 className="text-2xl font-bold text-neutral-300 mb-2">No historical data found.</h3>
+                        <p className="text-neutral-500">Submit videos to track your progress here.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -119,8 +119,8 @@ function CoachDashboardContent() {
                             <div key={i} className="bg-neutral-800 rounded-3xl p-6 border border-neutral-700/50 shadow-xl overflow-hidden relative group hover:border-neutral-500 transition-colors">
                                 <div className="absolute top-0 right-0 p-4 z-10 flex flex-col items-end">
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-sm ${sub.status === 'ACHIEVED' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
-                                            sub.status === 'INTERVENTION' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
-                                                'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                                        sub.status === 'INTERVENTION' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                                            'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                                         }`}>
                                         {sub.status || 'PENDING'}
                                     </span>
