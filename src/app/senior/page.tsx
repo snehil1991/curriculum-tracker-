@@ -34,6 +34,9 @@ export default function SeniorDashboard() {
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [filterState, setFilterState] = useState('All');
     const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [passcode, setPasscode] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
     const fetchSubmissions = async () => {
         try {
@@ -76,13 +79,40 @@ export default function SeniorDashboard() {
         ? submissions
         : submissions.filter(s => s.state === filterState);
 
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-screen bg-neutral-900 flex items-center justify-center p-6">
+                <div className="bg-neutral-800 p-8 rounded-3xl border border-neutral-700 max-w-sm w-full text-center shadow-2xl">
+                    <h2 className="text-2xl font-bold text-white mb-6">Senior Access</h2>
+                    <input
+                        type="password"
+                        placeholder="Enter Pin Code"
+                        value={passcode}
+                        onChange={e => setPasscode(e.target.value)}
+                        className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 text-white mb-4 focus:outline-none focus:border-blue-500"
+                    />
+                    {errorMsg && <p className="text-red-400 text-sm mb-4">{errorMsg}</p>}
+                    <button
+                        onClick={() => {
+                            if (passcode === '9999') setIsAuthenticated(true);
+                            else setErrorMsg('Incorrect Pin');
+                        }}
+                        className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-colors"
+                    >
+                        Unlock Dashboard
+                    </button>
+                    <button onClick={() => router.push('/')} className="mt-4 text-sm text-neutral-400 hover:text-white underline-offset-4 hover:underline">Return to Coach Portal</button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-neutral-900 text-white p-6 md:p-12">
             <div className="max-w-7xl mx-auto">
                 <header className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
                     <div>
                         <h1 className="text-4xl font-extrabold tracking-tight mb-2">Senior Dashboard</h1>
-                        <p className="text-neutral-400">Review curriculum progressions (Auto-refreshes)</p>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-4">
